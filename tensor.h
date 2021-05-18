@@ -27,7 +27,9 @@ private:
         short r;
         short g;
         short b;
-    }
+    };
+    
+    
 
     float * data = nullptr; //<-- you are free to change this data structure (don't use std::vectors or std::array)
 
