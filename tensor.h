@@ -61,7 +61,7 @@ public:
         for(int i=0; i<r; i++){
             for(int j=0; j<c; j++){
                 for (int k=0;k<d; k++) {
-                    *(data+i*c*d+j*d+d)=v;
+                    *(data+i*c*d+j*d+k)=v;
                 }
             }
         }
@@ -92,7 +92,7 @@ public:
             for(int y=0; y<j; y++){
                 for (int z=0;z<k; z++) {
                     if (x==i-1 && y==j-1 && z==k-1) {
-                        ris= *(data+x*c*d+y*d+d);
+                        ris= *(data+x*c*d+y*d+k);
                     }
                 }
             }
@@ -157,7 +157,7 @@ public:
         for(int x=0; x<r; x++){
             for(int y=0; y<c; y++){
                 for (int z=0;z<d; z++) {
-                    if(abs(this.data+x*c*d+y*d+z-rhs.data+x*c*d+y*d)>EPSILON){
+                    if(abs(this.data+x*c*d+y*d+z-rhs.data+x*c*d+y*d+z)>EPSILON){
                         return false;
                     }
                 }
@@ -185,7 +185,7 @@ public:
         for(int x=0; x<r; x++){
             for(int y=0; y<c; y++){
                 for (int z=0;z<d; z++) {
-                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z-rhs.data+x*c*d+y*d;
+                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z-rhs.data+x*c*d+y*d+z;
                 }
             }
         }
@@ -211,7 +211,7 @@ public:
         for(int x=0; x<r; x++){
             for(int y=0; y<c; y++){
                 for (int z=0;z<d; z++) {
-                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z+rhs.data+x*c*d+y*d;
+                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z+rhs.data+x*c*d+y*d+z;
                     
                 }
             }
@@ -239,7 +239,7 @@ public:
         for(int x=0; x<r; x++){
             for(int y=0; y<c; y++){
                 for (int z=0;z<d; z++) {
-                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z*rhs.data+x*c*d+y*d;
+                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z*rhs.data+x*c*d+y*d+z;
                 }
             }
         }
@@ -265,7 +265,7 @@ public:
         for(int x=0; x<r; x++){
             for(int y=0; y<c; y++){
                 for (int z=0;z<d; z++) {
-                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z/rhs.data+x*c*d+y*d;
+                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z/rhs.data+x*c*d+y*d+z;
                 }
             }
         }
