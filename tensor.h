@@ -179,8 +179,22 @@ public:
      * 
      * @return returns a new Tensor containing the result of the operation
     */
-    Tensor operator +(const Tensor &rhs)const;
-
+    Tensor operator +(const Tensor &rhs)const{
+        if(this->r != rhs.r || this->c != rhs.c || this->d != rhs.d){
+            throw std::dimension_mismatch("dimensioni diverse");
+        }
+        Tensor ris(this->r,this->c,this->d,0.0);
+        for(int x=0; x<r; x++){
+            for(int y=0; y<c; y++){
+                for (int z=0;z<d; z++) {
+                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z+rhs.data+x*c*d+y*d;
+                }
+            }
+        }
+        return ris;
+        
+    }
+        
     /**
      * Operator overloading *
      * 
