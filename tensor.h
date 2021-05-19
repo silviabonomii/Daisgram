@@ -153,7 +153,18 @@ public:
      * 
      * @return returns true if all their entries are "floating" equal
      */
-    bool operator==(const Tensor& rhs) const;
+    bool operator==(const Tensor& rhs) const{
+        for(int x=0; x<r; x++){
+            for(int y=0; y<c; y++){
+                for (int z=0;z<d; z++) {
+                    if(abs(this.data+x*c*d+y*d+z-rhs.data+x*c*d+y*d)>EPSILON){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
     /**
      * Operator overloading -
@@ -166,7 +177,20 @@ public:
      * 
      * @return returns a new Tensor containing the result of the operation
      */
-    Tensor operator-(const Tensor &rhs)const;
+    Tensor operator-(const Tensor &rhs)const{
+        if(this->r != rhs.r || this->c != rhs.c || this->d != rhs.d){
+            throw std::dimension_mismatch("dimensioni diverse");
+        }
+        Tensor ris(this->r,this->c,this->d,0.0);
+        for(int x=0; x<r; x++){
+            for(int y=0; y<c; y++){
+                for (int z=0;z<d; z++) {
+                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z-rhs.data+x*c*d+y*d;
+                }
+            }
+        }
+        return ris;
+    }
     
      /**
      * Operator overloading +
@@ -188,6 +212,7 @@ public:
             for(int y=0; y<c; y++){
                 for (int z=0;z<d; z++) {
                     ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z+rhs.data+x*c*d+y*d;
+                    
                 }
             }
         }
@@ -206,7 +231,20 @@ public:
      * 
      * @return returns a new Tensor containing the result of the operation
      */
-    Tensor operator*(const Tensor &rhs)const;
+    Tensor operator*(const Tensor &rhs)const{
+        if(this->r != rhs.r || this->c != rhs.c || this->d != rhs.d){
+            throw std::dimension_mismatch("dimensioni diverse");
+        }
+        Tensor ris(this->r,this->c,this->d,0.0);
+        for(int x=0; x<r; x++){
+            for(int y=0; y<c; y++){
+                for (int z=0;z<d; z++) {
+                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z*rhs.data+x*c*d+y*d;
+                }
+            }
+        }
+        return ris;
+    }
     
     /**
      * Operator overloading /
@@ -219,7 +257,20 @@ public:
      * 
      * @return returns a new Tensor containing the result of the operation
      */
-    Tensor operator/(const Tensor &rhs)const;
+    Tensor operator/(const Tensor &rhs)const{
+        if(this->r != rhs.r || this->c != rhs.c || this->d != rhs.d){
+            throw std::dimension_mismatch("dimensioni diverse");
+        }
+        Tensor ris(this->r,this->c,this->d,0.0);
+        for(int x=0; x<r; x++){
+            for(int y=0; y<c; y++){
+                for (int z=0;z<d; z++) {
+                    ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z/rhs.data+x*c*d+y*d;
+                }
+            }
+        }
+        return ris;
+    }
 
     /**
      * Operator overloading - 
@@ -230,7 +281,17 @@ public:
      * 
      * @return returns a new Tensor containing the result of the operation
      */
-    Tensor operator-(const float &rhs)const;
+        Tensor operator-(const float &rhs)const{
+            Tensor ris(this->r,this->c,this->d,0.0);
+            for(int x=0; x<r; x++){
+                for(int y=0; y<c; y++){
+                    for (int z=0;z<d; z++) {
+                        ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z-rhs;
+                    }
+                }
+            }
+            return ris;
+        }
 
     /**
      * Operator overloading +
@@ -241,7 +302,17 @@ public:
      * 
      * @return returns a new Tensor containing the result of the operation
      */
-    Tensor operator+(const float &rhs)const;
+        Tensor operator+(const float &rhs)const{
+            Tensor ris(this->r,this->c,this->d,0.0);
+            for(int x=0; x<r; x++){
+                for(int y=0; y<c; y++){
+                    for (int z=0;z<d; z++) {
+                        ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z+rhs;
+                    }
+                }
+            }
+            return ris;
+        }
 
     /**
      * Operator overloading *
@@ -252,7 +323,17 @@ public:
      * 
      * @return returns a new Tensor containing the result of the operation
      */
-    Tensor operator*(const float &rhs)const;
+        Tensor operator*(const float &rhs)const{
+            Tensor ris(this->r,this->c,this->d,0.0);
+            for(int x=0; x<r; x++){
+                for(int y=0; y<c; y++){
+                    for (int z=0;z<d; z++) {
+                        ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z*rhs;
+                    }
+                }
+            }
+            return ris;
+        }
 
     /**
      * Operator overloading / between a Tensor and a constant
@@ -263,7 +344,17 @@ public:
      * 
      * @return returns a new Tensor containing the result of the operation
      */
-    Tensor operator/(const float &rhs)const;
+        Tensor operator/(const float &rhs)const{
+            Tensor ris(this->r,this->c,this->d,0.0);
+            for(int x=0; x<r; x++){
+                for(int y=0; y<c; y++){
+                    for (int z=0;z<d; z++) {
+                        ris.data+x*c*d+y*d+z=this.data+x*c*d+y*d+z/rhs;
+                    }
+                }
+            }
+            return ris;
+        }
 
     /**
      * Operator overloading = (assignment) 
@@ -272,7 +363,16 @@ public:
      * 
      * @return a reference to the receiver object
      */
-    Tensor & operator=(const Tensor &other);
+        Tensor & operator=(const Tensor &other){
+            for(int x=0; x<r; x++){
+                for(int y=0; y<c; y++){
+                    for (int z=0;z<d; z++) {
+                        this.data+x*c*d+y*d+z=other.data+x*c*d+y*d+z;
+                    }
+                }
+            }
+            return *this;
+        }
 
     /**
      * Random Initialization
