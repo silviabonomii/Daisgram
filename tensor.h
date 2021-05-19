@@ -21,21 +21,13 @@ class Tensor
 {
 private:
     
-    struct pixel{
-        pixel * next;
-        pixel * prev;
-        short r;
-        short g;
-        short b;
-    };
-    
     
 
     float * data = nullptr; //<-- you are free to change this data structure (don't use std::vectors or std::array)
 
-    int r = 0;  // number of rows
-    int c = 0;  // number of columns
-    int d = 0;  // tensor depth
+    int r;  // number of rows
+    int c;  // number of columns
+    int d;  // tensor depth
 
 public:
 
@@ -44,8 +36,12 @@ public:
      * 
      * Parameter-less class constructor 
      */
-    Tensor();
-
+    Tensor(){
+        r=0;
+        c=0;
+        d=0;
+        data = new float[r*c*d];
+    }
     /**
      * Class constructor
      * 
@@ -57,15 +53,29 @@ public:
      * @param v
      * @return new Tensor
      */
-    Tensor(int r, int c, int d, float v = 0.0);
+    Tensor(int r, int c, int d, float v = 0.0){
+        r=r;
+        c=c;
+        d=d;
+        data = new float[r*c*d];
+        for(int i=0; i<r; i++){
+            for(int j=0; j<c; j++){
+                for (int k=0;k<d; k++) {
+                    *(data+i*c*d+j*d+d)=v;
+                }
+            }
+        }
+        return this;
+    }
 
     /**
      * Class distructor
      * 
      * Cleanup the data when deallocated
      */
-    ~Tensor();
-
+    ~Tensor(){
+        delete[] data;
+    }
     /**
      * Operator overloading ()
      * 
@@ -73,8 +83,26 @@ public:
      * 
      * @return the value at location [i][j][k]
      */
-    float operator()(int i, int j, int k) const;
-
+    float operator()(int i, int j, int k) const{
+        float ris;
+        if(i>r || j>c || k>d || i<0 || j<0 || k<0){
+            throw std::index_out_of_bound("valori fuori dal range");
+        }
+        for(int x=0; x<i; x++){
+            for(int y=0; y<j; y++){
+                for (int z=0;z<k; z++) {
+                    if (x==i-1 && y==j-1 && z==k-1) {
+                        ris= *(data+x*c*d+y*d+d);
+                    }
+                }
+            }
+        }
+        return ris;
+    }
+        
+        
+    
+    
     /**
      * Operator overloading ()
      * 
